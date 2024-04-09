@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.Messaging
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.Hello", "OrleansBenchmarks.Hello\OrleansBenchmarks.Hello.csproj", "{FC1FA7A3-FA4C-404F-990E-38F4C9BDD3D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.ContractNetProtocol", "OrleansBenchmarks.ContractNetProtocol\OrleansBenchmarks.ContractNetProtocol.csproj", "{736EE354-124C-4320-AE8B-1097F986CF31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FC1FA7A3-FA4C-404F-990E-38F4C9BDD3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC1FA7A3-FA4C-404F-990E-38F4C9BDD3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC1FA7A3-FA4C-404F-990E-38F4C9BDD3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{736EE354-124C-4320-AE8B-1097F986CF31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{736EE354-124C-4320-AE8B-1097F986CF31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{736EE354-124C-4320-AE8B-1097F986CF31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{736EE354-124C-4320-AE8B-1097F986CF31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
