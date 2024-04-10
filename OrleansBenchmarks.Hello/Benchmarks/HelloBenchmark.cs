@@ -7,7 +7,7 @@ namespace OrleansBenchmarks.Hello.Benchmarks;
 
 public class HelloBenchmark
 {
-    [Params(0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3500, 5000, 7000, 8750, 10000)]
+    [Params(100, 200, 500, 1000, 2000, 5000, 10000)]
     public int NumberOfGrainsCreated { get; set; }
 
     private IHost Host { get; set; } = null!;
