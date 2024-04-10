@@ -1,21 +1,15 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
-USER $APP_UID
-WORKDIR /app
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
 ARG BUILD_CONFIGURATION=Release
+ARG PROJECT_NAME=OrleansBenchmarks.Messaging
+
 WORKDIR /src
-COPY ["OrleansBenchmarks.Messaging/OrleansBenchmarks.Messaging.csproj", "OrleansBenchmarks.Messaging/"]
-RUN dotnet restore "OrleansBenchmarks.Messaging/OrleansBenchmarks.Messaging.csproj"
 COPY . .
-WORKDIR "/src/OrleansBenchmarks.Messaging"
-RUN dotnet build "OrleansBenchmarks.Messaging.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "OrleansBenchmarks.Messaging.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet restore "${PROJECT_NAME}/${PROJECT_NAME}.csproj"
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "OrleansBenchmarks.Messaging.dll"]
+WORKDIR "/src/${PROJECT_NAME}"
+RUN dotnet build "${PROJECT_NAME}.csproj" -c $BUILD_CONFIGURATION -o /src/bin
+RUN dotnet publish "${PROJECT_NAME}.csproj" -c $BUILD_CONFIGURATION -o /src/bin/publish /p:UseAppHost=false
+
+WORKDIR /src/bin/publish
+ENTRYPOINT ["dotnet", "${PROJECT_NAME}.dll"]
