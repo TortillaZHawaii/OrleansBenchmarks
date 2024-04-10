@@ -12,8 +12,11 @@ jobs:
   hello_image:
     name: Push Hello Docker image to GitHub Container Registry
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-   
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -45,7 +48,10 @@ jobs:
   messaging_image:
     name: Push Messaging Docker image to GitHub Container Registry
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout
@@ -78,8 +84,11 @@ jobs:
   contract_net_protocol_image:
     name: Push ContractNetProtocol Docker image to GitHub Container Registry
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
