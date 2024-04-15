@@ -12,4 +12,4 @@ RUN dotnet build "${PROJECT_NAME}.csproj" -c $BUILD_CONFIGURATION -o /src/bin
 RUN dotnet publish "${PROJECT_NAME}.csproj" -c $BUILD_CONFIGURATION -o /src/bin/publish /p:UseAppHost=false
 
 WORKDIR /src/bin/publish
-ENTRYPOINT ["dotnet", "${PROJECT_NAME}.dll"]
+ENTRYPOINT ["dotnet", "OrleansBenchmarks.Messaging.dll"]
