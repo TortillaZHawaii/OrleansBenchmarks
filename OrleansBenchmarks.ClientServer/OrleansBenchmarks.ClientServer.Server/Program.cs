@@ -10,5 +10,5 @@ hostBuilder.UseOrleans(builder =>
 using var host = hostBuilder
     .UseConsoleLifetime()
     .Build();
-    
+
 host.Run();

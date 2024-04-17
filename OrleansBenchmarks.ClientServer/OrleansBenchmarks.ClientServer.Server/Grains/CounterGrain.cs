@@ -1,5 +1,3 @@
-using Orleans;
-
 namespace OrleansBenchmarks.ClientServer.Server.Grains;
 
 public class CounterGrain : Grain, ICounterGrain

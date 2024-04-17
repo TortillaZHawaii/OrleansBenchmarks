@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
+ARG BUILD_CONFIGURATION=Release
+
+WORKDIR /src
+COPY . .
+
+RUN dotnet restore "OrleansBenchmarks.ClientServer/OrleansBenchmarks.ClientServer.Client/OrleansBenchmarks.ClientServer.Client.csproj"
+RUN dotnet restore "OrleansBenchmarks.ClientServer/OrleansBenchmarks.ClientServer.Server/OrleansBenchmarks.ClientServer.Server.csproj"
+
+WORKDIR "/src/OrleansBenchmarks.ClientServer"
+RUN dotnet build "OrleansBenchmarks.ClientServer.Server/OrleansBenchmarks.ClientServer.Server.csproj" -c $BUILD_CONFIGURATION -o /src/bin
+RUN dotnet publish "OrleansBenchmarks.ClientServer.Server/OrleansBenchmarks.ClientServer.Server.csproj" -c $BUILD_CONFIGURATION -o /src/bin/publish /p:UseAppHost=false
+
+RUN dotnet build "OrleansBenchmarks.ClientServer.Client/OrleansBenchmarks.ClientServer.Client.csproj" -c $BUILD_CONFIGURATION -o /src/bin
+RUN dotnet publish "OrleansBenchmarks.ClientServer.Client/OrleansBenchmarks.ClientServer.Client.csproj" -c $BUILD_CONFIGURATION -o /src/bin/publish /p:UseAppHost=false
+
+RUN cp runclientserver.sh /src/bin/publish
+
+WORKDIR /src/bin/publish
+ENTRYPOINT ["sh", "runclientserver.sh"]
