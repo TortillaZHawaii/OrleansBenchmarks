@@ -15,6 +15,7 @@ RUN dotnet build "OrleansBenchmarks.ClientServer.Client/OrleansBenchmarks.Client
 RUN dotnet publish "OrleansBenchmarks.ClientServer.Client/OrleansBenchmarks.ClientServer.Client.csproj" -c $BUILD_CONFIGURATION -o /src/bin/publish /p:UseAppHost=false
 
 RUN cp runclientserver.sh /src/bin/publish
+RUN chmod +x /src/bin/publish/runclientserver.sh
 
 WORKDIR /src/bin/publish
-ENTRYPOINT ["sh", "runclientserver.sh"]
+ENTRYPOINT ["/bin/bash", "runclientserver.sh"]
