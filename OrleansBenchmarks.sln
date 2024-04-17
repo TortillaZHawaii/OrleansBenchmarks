@@ -6,6 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.Hello", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.ContractNetProtocol", "OrleansBenchmarks.ContractNetProtocol\OrleansBenchmarks.ContractNetProtocol.csproj", "{736EE354-124C-4320-AE8B-1097F986CF31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.ClientServer.Server", "OrleansBenchmarks.ClientServer.Server\OrleansBenchmarks.ClientServer.Server.csproj", "{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.ClientServer.Client", "OrleansBenchmarks.ClientServer.Client\OrleansBenchmarks.ClientServer.Client.csproj", "{B1A76742-6149-4231-8FDF-0764B5D64E09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBenchmarks.ClientServer", "OrleansBenchmarks.ClientServer\OrleansBenchmarks.ClientServer.csproj", "{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrleansBenchmarks.ClientServer", "OrleansBenchmarks.ClientServer", "{E3B86482-7BF6-40B7-BDCB-213D3224189E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +32,22 @@ Global
 		{736EE354-124C-4320-AE8B-1097F986CF31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{736EE354-124C-4320-AE8B-1097F986CF31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{736EE354-124C-4320-AE8B-1097F986CF31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A76742-6149-4231-8FDF-0764B5D64E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A76742-6149-4231-8FDF-0764B5D64E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A76742-6149-4231-8FDF-0764B5D64E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A76742-6149-4231-8FDF-0764B5D64E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2F5537B7-2D3F-4CFD-9B27-A09185D00C4D} = {E3B86482-7BF6-40B7-BDCB-213D3224189E}
+		{B1A76742-6149-4231-8FDF-0764B5D64E09} = {E3B86482-7BF6-40B7-BDCB-213D3224189E}
+		{D63FF3D9-C487-4FA9-9F7F-8AE4BBD2B87E} = {E3B86482-7BF6-40B7-BDCB-213D3224189E}
 	EndGlobalSection
 EndGlobal
