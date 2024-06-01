@@ -23,3 +23,8 @@ for row, mean_list in enumerate(means):
 for jakas_zmienna in cvs:
     sformatowana_podlista = [f"{cv:.1f}" for cv in jakas_zmienna]
     print(sformatowana_podlista)
+
+# the result is:
+# ['46.2', '56.5', '57.7', '56.9', '53.0', '57.1', '61.3']
+# ['30.0', '26.3', '32.0', '31.2', '27.3', '26.5', '19.9']
+# ['39.1', '65.2', '24.0', '18.8', '19.8', '20.7', '20.4']
