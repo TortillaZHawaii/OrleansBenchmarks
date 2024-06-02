@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 from scipy.stats import norm
+from sklearn.mixture import GaussianMixture
 
 
 def load_data():
@@ -150,6 +151,35 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
     fig.subplots_adjust(left=0.03, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
     plt.show()
 
+
+
+# Special case of drawing cvs for orleans-messaging scenario
+def draw_messaging_cvs(groups: Sequence[pd.DataFrame]):
+    scenario_groups = list(filter(lambda group: group.iloc[0]["scenario"] == "orleans-messaging", groups))
+
+    fig, axes = plt.subplots(1, 1, figsize=(20, 10))
+    bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    n_components = 2
+
+    cvs = []
+
+    for group in scenario_groups:
+        gmm = GaussianMixture(n_components)
+        gmm.fit(group['mean'].values.reshape(-1, 1))
+
+        means = gmm.means_
+        stds = gmm.covariances_ ** 0.5
+        cvss = stds / means * 100 # percent
+
+        cvs.extend(cvss.flatten())
+
+    axes.hist(cvs, bins=bins)
+    axes.set_title("messaging")
+    axes.set_xlabel("Coefficient Variance [%]")
+    axes.set_ylabel("Count")
+
+    fig.subplots_adjust(left=0.03, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
+    plt.show()
 
 
 
@@ -448,6 +478,7 @@ def draw_chosen_with_normal(groups: Sequence[pd.DataFrame]):
 
 if __name__ == "__main__":
     groups = load_data()
-    draw_cvs(groups)
+    draw_messaging_cvs(groups)
+    # draw_cvs(groups)
     # draw_all(groups)
 
