@@ -129,54 +129,34 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
         "orleans-client-server"
     ]
 
-    fig, axes = plt.subplots(len(scenarios), 1, figsize=(20, 10))
+    n_components = 3
+    fig, axes = plt.subplots(len(scenarios), n_components, figsize=(20, 10))
     bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     for scenario_idx, scenario in enumerate(scenarios):
         scenario_groups = list(filter(lambda group: group.iloc[0]["scenario"] == scenario, groups))
 
-        # calculate cv for each group
-        cvs = []
-        for group in scenario_groups:
-            mean = group['mean'].mean()
-            std = group['mean'].std()
-            cv = std / mean * 100 # percent
-            cvs.append(cv)
+        for i in range(1, n_components + 1):
+            cvs = []
+            for group in scenario_groups:
+                gmm = GaussianMixture(n_components=i)
+                gmm.fit(group['mean'].values.reshape(-1, 1))
 
-        # draw cv for each group
-        axes[scenario_idx].hist(cvs, bins=bins)
-        axes[scenario_idx].set_title(scenario[8:])
-        axes[scenario_idx].set_xlabel("Coefficient Variance [%]")
-        axes[scenario_idx].set_ylabel("Count")
+                means = gmm.means_
+                stds = gmm.covariances_ ** 0.5
+                cvss = stds / means * 100
+                cvs.extend(cvss.flatten())
 
-    fig.subplots_adjust(left=0.03, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
-    plt.show()
+            if n_components == 1:
+                axes[scenario_idx].hist(cvs, bins=bins)
+                axes[scenario_idx].set_title(scenario[8:])
+                axes[scenario_idx].set_xlabel("Coefficient Variance [%]")
+                axes[scenario_idx].set_ylabel("Count")
+            else:
+                axes[scenario_idx, i - 1].hist(cvs, bins=bins)
+                axes[scenario_idx, i - 1].set_title(scenario[8:] + ', number of components: ' + str(i))
+                axes[scenario_idx, i - 1].set_xlabel("Coefficient Variance [%]")
+                axes[scenario_idx, i - 1].set_ylabel("Count")
 
-
-
-# Special case of drawing cvs for orleans-messaging scenario
-def draw_messaging_cvs(groups: Sequence[pd.DataFrame]):
-    scenario_groups = list(filter(lambda group: group.iloc[0]["scenario"] == "orleans-messaging", groups))
-
-    fig, axes = plt.subplots(1, 1, figsize=(20, 10))
-    bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    n_components = 2
-
-    cvs = []
-
-    for group in scenario_groups:
-        gmm = GaussianMixture(n_components)
-        gmm.fit(group['mean'].values.reshape(-1, 1))
-
-        means = gmm.means_
-        stds = gmm.covariances_ ** 0.5
-        cvss = stds / means * 100 # percent
-
-        cvs.extend(cvss.flatten())
-
-    axes.hist(cvs, bins=bins)
-    axes.set_title("messaging")
-    axes.set_xlabel("Coefficient Variance [%]")
-    axes.set_ylabel("Count")
 
     fig.subplots_adjust(left=0.03, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
     plt.show()
@@ -478,7 +458,6 @@ def draw_chosen_with_normal(groups: Sequence[pd.DataFrame]):
 
 if __name__ == "__main__":
     groups = load_data()
-    draw_messaging_cvs(groups)
-    # draw_cvs(groups)
+    draw_cvs(groups)
     # draw_all(groups)
 
