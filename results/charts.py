@@ -130,7 +130,7 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
     ]
 
     n_components = 3
-    fig, axes = plt.subplots(len(scenarios), n_components, figsize=(20, 10))
+    fig, axes = plt.subplots(len(scenarios), n_components, figsize=(10, 10))
     bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     for scenario_idx, scenario in enumerate(scenarios):
         scenario_groups = list(filter(lambda group: group.iloc[0]["scenario"] == scenario, groups))
@@ -143,9 +143,9 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
 
                 means = gmm.means_
                 stds = gmm.covariances_ ** 0.5
-                cvss = stds / means * 100
-                cvs.extend(cvss.flatten())
+                cvs.extend(std[0] / mean[0] * 100 for mean, std in zip(means, stds))
 
+            cvs = [item for sublist in cvs for item in sublist]
             if n_components == 1:
                 axes[scenario_idx].hist(cvs, bins=bins)
                 axes[scenario_idx].set_title(scenario[8:])
@@ -153,12 +153,13 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
                 axes[scenario_idx].set_ylabel("Count")
             else:
                 axes[scenario_idx, i - 1].hist(cvs, bins=bins)
-                axes[scenario_idx, i - 1].set_title(scenario[8:] + ', number of components: ' + str(i))
+                axes[scenario_idx, i - 1].set_title(scenario[8:] + ', components: ' + str(i))
                 axes[scenario_idx, i - 1].set_xlabel("Coefficient Variance [%]")
                 axes[scenario_idx, i - 1].set_ylabel("Count")
 
 
-    fig.subplots_adjust(left=0.03, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
+    fig.subplots_adjust(left=0.06, right=0.95, top=0.93, bottom=0.06, wspace=0.5, hspace=0.6)
+    fig.savefig('cvs.pdf')
     plt.show()
 
 
