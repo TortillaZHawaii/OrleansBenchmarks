@@ -163,6 +163,38 @@ def draw_cvs(groups: Sequence[pd.DataFrame]):
     plt.show()
 
 
+def draw_global_cv(groups: Sequence[pd.DataFrame]):
+    scenarios = [
+        "orleans-messaging",
+        "orleans-contract-net-protocol",
+        "orleans-client-server"
+    ]
+
+    fig = plt.figure()
+    bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    cvs = []
+    for scenario_idx, scenario in enumerate(scenarios):
+        scenario_groups = list(filter(lambda group: group.iloc[0]["scenario"] == scenario, groups))
+
+        for group in scenario_groups:
+            gmm = GaussianMixture(n_components=1)
+            gmm.fit(group['mean'].values.reshape(-1, 1))
+
+            means = gmm.means_
+            stds = gmm.covariances_ ** 0.5
+            cvs.extend(std[0] / mean[0] * 100 for mean, std in zip(means, stds))
+
+
+    cvs = [item for sublist in cvs for item in sublist]
+    plt.hist(cvs, bins=bins)
+    plt.title("CV aggregated over all scenarios")
+    plt.xlabel("Coefficient Variance [%]")
+    plt.ylabel("Count")
+    
+    fig.savefig('global_cv.png')
+    plt.show()
+
+
 
 def draw_all_with_respect_to_cpu(groups: Sequence[pd.DataFrame]):
     scenarios = [
@@ -459,6 +491,6 @@ def draw_chosen_with_normal(groups: Sequence[pd.DataFrame]):
 
 if __name__ == "__main__":
     groups = load_data()
-    draw_cvs(groups)
+    draw_global_cv(groups)
     # draw_all(groups)
 
